@@ -1,13 +1,21 @@
 package base
 
+import "strconv"
+
 type Tour struct {
 	tourCities []City
-	fitness float64
-	distance float64
+	fitness    float64
+	distance   float64
 }
 
 // InitTour : Initialize tour with cities arranged randomly
-func (a *Tour) InitTour(tm TourManager) {
+func (a *Tour) InitTour(numberOfCities int) {
+	a.tourCities = make([]City, numberOfCities)
+}
+
+// InitTourCities
+func (a *Tour) InitTourCities(tm TourManager) {
+	a.InitTour(tm.NumberOfCities())
 	// Add all destination cities from TourManager to Tour
 	for i := 0; i < tm.NumberOfCities(); i++ {
 		a.SetCity(i, tm.GetCity(i))
@@ -17,7 +25,7 @@ func (a *Tour) InitTour(tm TourManager) {
 }
 
 // GetCity : Get city based on position in slice
-func (a *Tour) GetCity(tourPosition int) City{
+func (a *Tour) GetCity(tourPosition int) City {
 	return a.tourCities[tourPosition]
 }
 
@@ -34,15 +42,15 @@ func (a *Tour) TourSize() int {
 }
 
 // TourDistance : Calculates total distance traveled for this tour
-func (a *Tour) TourDistance() float64{
+func (a *Tour) TourDistance() float64 {
 	if a.distance == 0 {
 		td := float64(0)
-		for i:=0; i < a.TourSize(); i++ {
+		for i := 0; i < a.TourSize(); i++ {
 			fromC := a.GetCity(i)
 			var destC City
 			if i+1 < a.TourSize() {
-				destC = a.GetCity(i+1)
-			}else {
+				destC = a.GetCity(i + 1)
+			} else {
 				destC = a.GetCity(0)
 			}
 			td += fromC.DistanceTo(destC)
@@ -52,9 +60,9 @@ func (a *Tour) TourDistance() float64{
 	return a.distance
 }
 
-func (a *Tour) Fitness() float64{
+func (a *Tour) Fitness() float64 {
 	if a.fitness == 0 {
-		a.fitness = 1/a.TourDistance()
+		a.fitness = 1 / a.TourDistance()
 	}
 	return a.fitness
 }
@@ -70,8 +78,8 @@ func (a *Tour) ContainCity(c City) bool {
 
 func (a Tour) String() string {
 	s := "|"
-	for _, c := range a.tourCities {
-		s += c.String() + "|"
+	for i , c := range a.tourCities {
+		s += strconv.Itoa(i) + c.String() + "|"
 	}
 	return s
 }

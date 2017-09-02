@@ -12,10 +12,20 @@ type City struct {
 	y int
 }
 
-// SetRandomLocation : Randomly generates coordinates city
-func (a *City) SetRandomLocation() {
-	a.x = rand.Intn(100) * 100
-	a.y = rand.Intn(100) * 100
+// GenerateRandomCity : Generate city with random coordinates
+func GenerateRandomCity() City{
+	c := City{}
+	c.x = rand.Intn(100) * 100
+	c.y = rand.Intn(100) * 100
+	return c
+}
+
+// GenerateCity : Generate city with user defined coordinates
+func GenerateCity(x int, y int) City{
+	c := City{}
+	c.x = x
+	c.y = y
+	return c
 }
 
 // SetLocation : User defined coordinates for a city
@@ -50,7 +60,7 @@ func (a City) String() string {
 // ShuffleCities : return a shuffled []City given input []City
 func ShuffleCities(in []City) []City {
 	out := make([]City, len(in), cap(in))
-	perm := rand.Perm(len(i))
+	perm := rand.Perm(len(in))
 	for i, v := range perm {
 		out[v] = in[i]
 	}
