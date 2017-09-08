@@ -1,6 +1,8 @@
 package base
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type Tour struct {
 	tourCities []City
@@ -33,6 +35,11 @@ func (a *Tour) GetCity(tourPosition int) City {
 func (a *Tour) SetCity(tourPosition int, c City) {
 	a.tourCities[tourPosition] = c
 	// Reset fitness if tour have been altered
+	a.fitness = 0
+	a.distance = 0
+}
+
+func (a *Tour) ResetFitnessDistance() {
 	a.fitness = 0
 	a.distance = 0
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	b "go-tsp/base"
+	"go-tsp/base"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -11,26 +11,75 @@ import (
 	ga "go-tsp/geneticAlgorithm"
 )
 
+var enablelogging = true
+
 func main() {
 	fmt.Println("Traveling sales person")
 	// Disable logger
-	log.SetOutput(ioutil.Discard)
+	if !enablelogging {
+		log.SetOutput(ioutil.Discard)
+	}
+
 	// Seed default random
 	//seed := time.Now().Unix()
-	// 1504372704 for 18 0 18
+
+	// Seed 1504372704 for 18 0 18
 	seed := int64(1504372704)
 	fmt.Println("seed: ",seed)
 	rand.Seed(seed)
-	//tspRandom()
 
-	// Test Area
-	crossovertester()
+	// Init TourManager
+	tm := base.TourManager{}
+	tm.NewTourManager()
+
+	// Generate Cities
+	// Fixed cities
+	cities := initializeSampleCities()
+	// Random Citites
+	// TODO : random cities generator
+
+	// Add cities to TourManager
+	for _, v := range cities {
+		tm.AddCity(v)
+	}
+
+	//tspRandom()
+	log.Println("Initialization completed")
+	log.Println("Begin genetic algorithm")
+	tspGA(&tm, 100)
+}
+
+
+// tspGA : Travelling sales person with genetic algorithm
+// input :- TourManager, Number of generations
+func tspGA(tm *base.TourManager, gen int) {
+	p := base.Population{}
+	p.InitPopulation(50, *tm)
+
+	// Get initial fittest tour and it's tour distance
+	fmt.Println("Start....")
+	iFit:= p.GetFittest()
+	iTourDistance := iFit.TourDistance()
+	//fmt.Println("Initial tour distance: ", iTourDistance)
+
+	// Evolve population "gen" number of times
+	for i := 0; i < gen; i++ {
+		log.Println("Generation ",i+1)
+		p = ga.EvolvePopulation(p)
+	}
+	// Get final fittest tour and tour distance
+	fmt.Println("Evolution completed")
+	fFit := p.GetFittest()
+	fTourDistance := fFit.TourDistance()
+
+	fmt.Println("Initial tour distance: ", iTourDistance)
+	fmt.Println("Final tour distance: ", fTourDistance)
 }
 
 func tspRandom() {
 	fmt.Println("Traveling sales person - Standard Random")
 	// Init TourManager
-	tm := b.TourManager{}
+	tm := base.TourManager{}
 	tm.NewTourManager()
 
 	// Generate Cities
@@ -42,36 +91,36 @@ func tspRandom() {
 	}
 
 	// Init population
-	p := b.Population{}
+	p := base.Population{}
 	p.InitPopulation(50, tm)
 	fmt.Println("Find........")
 	fmt.Println("Initial best distance: ", p.GetFittest().TourDistance())
 
 }
 
-func initializeSampleCities() []b.City {
-	cities := make([]b.City, 0, 20)
+func initializeSampleCities() []base.City {
+	cities := make([]base.City, 0, 20)
 	// Sample
-	cities = append(cities, b.GenerateCity(60, 200)) // c1
-	cities = append(cities, b.GenerateCity(180, 200))
-	cities = append(cities, b.GenerateCity(80, 180))
-	cities = append(cities, b.GenerateCity(140, 180))
-	cities = append(cities, b.GenerateCity(20, 160)) // c5
-	cities = append(cities, b.GenerateCity(100, 160))
-	cities = append(cities, b.GenerateCity(200, 160))
-	cities = append(cities, b.GenerateCity(140, 140))
-	cities = append(cities, b.GenerateCity(40, 120))
-	cities = append(cities, b.GenerateCity(100, 120)) // c10
-	cities = append(cities, b.GenerateCity(180, 100))
-	cities = append(cities, b.GenerateCity(60, 80))
-	cities = append(cities, b.GenerateCity(120, 80))
-	cities = append(cities, b.GenerateCity(180, 60))
-	cities = append(cities, b.GenerateCity(20, 40)) // c15
-	cities = append(cities, b.GenerateCity(100, 40))
-	cities = append(cities, b.GenerateCity(200, 40))
-	cities = append(cities, b.GenerateCity(20, 20))
-	cities = append(cities, b.GenerateCity(60, 20))
-	cities = append(cities, b.GenerateCity(160, 20)) // c20
+	cities = append(cities, base.GenerateCity(60, 200)) // c1
+	cities = append(cities, base.GenerateCity(180, 200))
+	cities = append(cities, base.GenerateCity(80, 180))
+	cities = append(cities, base.GenerateCity(140, 180))
+	cities = append(cities, base.GenerateCity(20, 160)) // c5
+	cities = append(cities, base.GenerateCity(100, 160))
+	cities = append(cities, base.GenerateCity(200, 160))
+	cities = append(cities, base.GenerateCity(140, 140))
+	cities = append(cities, base.GenerateCity(40, 120))
+	cities = append(cities, base.GenerateCity(100, 120)) // c10
+	cities = append(cities, base.GenerateCity(180, 100))
+	cities = append(cities, base.GenerateCity(60, 80))
+	cities = append(cities, base.GenerateCity(120, 80))
+	cities = append(cities, base.GenerateCity(180, 60))
+	cities = append(cities, base.GenerateCity(20, 40)) // c15
+	cities = append(cities, base.GenerateCity(100, 40))
+	cities = append(cities, base.GenerateCity(200, 40))
+	cities = append(cities, base.GenerateCity(20, 20))
+	cities = append(cities, base.GenerateCity(60, 20))
+	cities = append(cities, base.GenerateCity(160, 20)) // c20
 
 	// Sample using random seed
 	// Completed testing
@@ -79,10 +128,10 @@ func initializeSampleCities() []b.City {
 }
 
 // Functions below are for experimentation
-func crossovertester() {
+func gatester() {
 	fmt.Println("")
 	// Init TourManager
-	tm := b.TourManager{}
+	tm := base.TourManager{}
 	tm.NewTourManager()
 
 	// Generate Cities
@@ -92,9 +141,9 @@ func crossovertester() {
 	for _, v := range cities {
 		tm.AddCity(v)
 	}
-	t1 := b.Tour{}
+	t1 := base.Tour{}
 	t1.InitTourCities(tm)
-	t2 := b.Tour{}
+	t2 := base.Tour{}
 	t2.InitTourCities(tm)
 	t3 := ga.Crossover(t1,t2)
 	fmt.Println("t1---")
@@ -103,20 +152,23 @@ func crossovertester() {
 	fmt.Println(t2)
 	fmt.Println("t3---")
 	fmt.Println(t3)
+	fmt.Println("Mutation to t3")
+	ga.Mutation(&t3)
+	fmt.Println(t3)
 }
 
 func cityListContain() {
-	c1 := b.City{}
+	c1 := base.City{}
 	c1.SetLocation(10, 20)
-	c2 := b.City{}
+	c2 := base.City{}
 	c2.SetLocation(30, 40)
-	c3 := b.City{}
+	c3 := base.City{}
 	c3.SetLocation(50, 60)
 
-	c4 := b.City{}
+	c4 := base.City{}
 	c4.SetLocation(30, 40)
 
-	cslice := make([]b.City, 0, 20)
+	cslice := make([]base.City, 0, 20)
 
 	cslice = append(cslice, c1)
 	cslice = append(cslice, c2)
@@ -146,10 +198,10 @@ func xfunc() {
 	}
 	fmt.Println(x)
 
-	c1 := b.GenerateRandomCity()
+	c1 := base.GenerateRandomCity()
 	fmt.Println(c1)
 
-	c2 := b.GenerateRandomCity()
+	c2 := base.GenerateRandomCity()
 	fmt.Println(c2)
 
 	fmt.Println(c1.DistanceTo(c2))
