@@ -11,6 +11,7 @@ import (
 )
 
 var enablelogging = true
+var randomCityBool = true
 
 func main() {
 	fmt.Println("Traveling sales person")
@@ -40,10 +41,12 @@ func main() {
 	tm.NewTourManager()
 
 	// Generate Cities
-	// Fixed cities
-	cities := initializeSampleCities()
-	// Random Citites
-	// TODO : random cities generator
+	var cities []base.City
+	if randomCityBool {
+		cities = *initRandomCities(20)
+	} else {
+		cities = *initializeSampleCities()
+	}
 
 	// Add cities to TourManager
 	for _, v := range cities {
@@ -93,7 +96,7 @@ func tspRandom() {
 	tm.NewTourManager()
 
 	// Generate Cities
-	cities := initializeSampleCities()
+	cities := *initializeSampleCities()
 
 	// Add cities to TourManager
 	for _, v := range cities {
@@ -108,7 +111,7 @@ func tspRandom() {
 
 }
 
-func initializeSampleCities() []base.City {
+func initializeSampleCities() *[]base.City {
 	cities := make([]base.City, 0, 20)
 	// Sample
 	cities = append(cities, base.GenerateCity(60, 200)) // c1
@@ -134,5 +137,15 @@ func initializeSampleCities() []base.City {
 
 	// Sample using random seed
 	// Completed testing
-	return cities
+	return &cities
+}
+
+func initRandomCities(cityCount int) *[]base.City {
+	cities := make([]base.City, 0, cityCount)
+
+	for i := 0; i < cityCount; i++ {
+		cities = append(cities, base.GenerateRandomCity())
+	}
+
+	return &cities
 }
