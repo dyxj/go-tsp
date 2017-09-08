@@ -9,6 +9,7 @@ import (
 	"reflect"
 	"time"
 	ga "go-tsp/geneticAlgorithm"
+	"os"
 )
 
 var enablelogging = true
@@ -16,7 +17,15 @@ var enablelogging = true
 func main() {
 	fmt.Println("Traveling sales person")
 	// Disable logger
-	if !enablelogging {
+	if enablelogging {
+		//f, err := os.OpenFile("tsplog", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+		f, err := os.OpenFile("tsplog", os.O_RDWR | os.O_CREATE | os.O_TRUNC, 0666)
+		if err != nil {
+			log.Fatalf("error opening file: %v\n",err)
+		}
+		defer f.Close()
+		log.SetOutput(f)
+	}else {
 		log.SetOutput(ioutil.Discard)
 	}
 
@@ -74,6 +83,10 @@ func tspGA(tm *base.TourManager, gen int) {
 
 	fmt.Println("Initial tour distance: ", iTourDistance)
 	fmt.Println("Final tour distance: ", fTourDistance)
+
+	log.Println("Evolution completed")
+	log.Println("Initial tour distance: ", iTourDistance)
+	log.Println("Final tour distance: ", fTourDistance)
 }
 
 func tspRandom() {
