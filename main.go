@@ -12,8 +12,13 @@ import (
 
 var enablelogging = true
 var randomCityBool = false
+var devTestBool = true
 
 func main() {
+	if devTestBool {
+		devTest()
+		os.Exit(0)
+	}
 	fmt.Println("Traveling sales person")
 	// Disable logger
 	if enablelogging {

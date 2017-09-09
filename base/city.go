@@ -53,6 +53,14 @@ func (a *City) DistanceTo(c City) float64 {
 	return fd
 }
 
+func (a *City) X() int {
+	return a.x
+}
+
+func (a *City) Y() int {
+	return a.y
+}
+
 func (a City) String() string {
 	return fmt.Sprintf("{x%d y%d}", a.x, a.y)
 }
