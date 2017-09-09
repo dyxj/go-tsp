@@ -11,7 +11,7 @@ import (
 )
 
 var enablelogging = true
-var randomCityBool = true
+var randomCityBool = false
 
 func main() {
 	fmt.Println("Traveling sales person")
@@ -71,15 +71,32 @@ func tspGA(tm *base.TourManager, gen int) {
 	iTourDistance := iFit.TourDistance()
 	//fmt.Println("Initial tour distance: ", iTourDistance)
 
+	fittestTours := make([]base.Tour, 0, gen+1)
+	fittestTours = append(fittestTours, *iFit)
 	// Evolve population "gen" number of times
-	for i := 0; i < gen; i++ {
-		log.Println("Generation ", i+1)
+	for i := 1; i < gen+1; i++ {
+		log.Println("Generation ", i)
 		p = ga.EvolvePopulation(p)
+		// Store fittest for each generation
+		fittestTours = append(fittestTours, *p.GetFittest())
 	}
 	// Get final fittest tour and tour distance
 	fmt.Println("Evolution completed")
 	fFit := p.GetFittest()
 	fTourDistance := fFit.TourDistance()
+
+	fmt.Println("Print fittest by generation-----------")
+	lastBestTourDistance := iTourDistance
+	// Plot Generation 0
+	// TODO
+	for gn, t := range fittestTours {
+		if t.TourDistance() < lastBestTourDistance {
+			lastBestTourDistance = t.TourDistance()
+			fmt.Printf("Generation %v: %v\n", gn, lastBestTourDistance)
+			// Plot graph of points
+			// TODO
+		}
+	}
 
 	fmt.Println("Initial tour distance: ", iTourDistance)
 	fmt.Println("Final tour distance: ", fTourDistance)
@@ -87,28 +104,6 @@ func tspGA(tm *base.TourManager, gen int) {
 	log.Println("Evolution completed")
 	log.Println("Initial tour distance: ", iTourDistance)
 	log.Println("Final tour distance: ", fTourDistance)
-}
-
-func tspRandom() {
-	fmt.Println("Traveling sales person - Standard Random")
-	// Init TourManager
-	tm := base.TourManager{}
-	tm.NewTourManager()
-
-	// Generate Cities
-	cities := *initializeSampleCities()
-
-	// Add cities to TourManager
-	for _, v := range cities {
-		tm.AddCity(v)
-	}
-
-	// Init population
-	p := base.Population{}
-	p.InitPopulation(50, tm)
-	fmt.Println("Find........")
-	fmt.Println("Initial best distance: ", p.GetFittest().TourDistance())
-
 }
 
 func initializeSampleCities() *[]base.City {

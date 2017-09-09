@@ -10,6 +10,27 @@ import (
 )
 
 // Functions below are for experimentation
+func tspRandom() {
+	fmt.Println("Traveling sales person - Standard Random")
+	// Init TourManager
+	tm := base.TourManager{}
+	tm.NewTourManager()
+
+	// Generate Cities
+	cities := *initializeSampleCities()
+
+	// Add cities to TourManager
+	for _, v := range cities {
+		tm.AddCity(v)
+	}
+
+	// Init population
+	p := base.Population{}
+	p.InitPopulation(50, tm)
+	fmt.Println("Find........")
+	fmt.Println("Initial best distance: ", p.GetFittest().TourDistance())
+}
+
 func gatester() {
 	fmt.Println("")
 	// Init TourManager
@@ -17,7 +38,7 @@ func gatester() {
 	tm.NewTourManager()
 
 	// Generate Cities
-	cities := initializeSampleCities()
+	cities := *initializeSampleCities()
 
 	// Add cities to TourManager
 	for _, v := range cities {
