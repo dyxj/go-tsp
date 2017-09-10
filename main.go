@@ -8,11 +8,23 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"path/filepath"
+	"gonum.org/v1/plot"
+	"gonum.org/v1/plot/plotter"
+	"gonum.org/v1/plot/plotutil"
+	"gonum.org/v1/plot/vg"
 )
 
-var enablelogging = true
-var randomCityBool = false
-var devTestBool = true
+var (
+	devTestBool    = true
+	enablelogging  = true
+	randomCityBool = false
+	rootpath       = "tsp"
+	// Fix seed
+	seed = int64(1504372704)
+	// Seed default random
+	//seed = time.Now().Unix()
+)
 
 func main() {
 	if devTestBool {
@@ -33,11 +45,6 @@ func main() {
 		log.SetOutput(ioutil.Discard)
 	}
 
-	// Seed default random
-	//seed := time.Now().Unix()
-
-	// Seed 1504372704 for 18 0 18
-	seed := int64(1504372704)
 	fmt.Println("seed: ", seed)
 	rand.Seed(seed)
 
@@ -76,6 +83,7 @@ func tspGA(tm *base.TourManager, gen int) {
 	iTourDistance := iFit.TourDistance()
 	//fmt.Println("Initial tour distance: ", iTourDistance)
 
+	// Map to store fittest tours
 	fittestTours := make([]base.Tour, 0, gen+1)
 	fittestTours = append(fittestTours, *iFit)
 	// Evolve population "gen" number of times
@@ -90,16 +98,17 @@ func tspGA(tm *base.TourManager, gen int) {
 	fFit := p.GetFittest()
 	fTourDistance := fFit.TourDistance()
 
-	fmt.Println("Print fittest by generation-----------")
+	fmt.Println("Print and save image of fittest by generation-----------")
+	// Store current best distance
 	lastBestTourDistance := iTourDistance
 	// Plot Generation 0
-	// TODO
+	visualization(iFit, 0, seed)
 	for gn, t := range fittestTours {
 		if t.TourDistance() < lastBestTourDistance {
 			lastBestTourDistance = t.TourDistance()
 			fmt.Printf("Generation %v: %v\n", gn, lastBestTourDistance)
 			// Plot graph of points
-			// TODO
+			visualization(&t, gn, seed)
 		}
 	}
 
@@ -146,6 +155,56 @@ func initRandomCities(cityCount int) *[]base.City {
 	for i := 0; i < cityCount; i++ {
 		cities = append(cities, base.GenerateRandomCity())
 	}
-
 	return &cities
+}
+
+// Save tour as graph
+func visualization(t *base.Tour, gen int, rseed int64) {
+	// Init plot
+	p, err := plot.New()
+	if err != nil {
+		panic(err)
+	}
+	// Set plot styles
+	p.Title.Text = fmt.Sprintf("Seed: %d, Generation %d, Tour Distance: %f",rseed, gen, t.TourDistance())
+	p.X.Label.Text = "X"
+	p.Y.Label.Text = "Y"
+	p.Add(plotter.NewGrid())
+
+	// Construct points
+	pts := TourToPoints(t)
+	// Plot points
+	err = plotutil.AddLinePoints(p, pts)
+	if err != nil  {
+		panic(err)
+	}
+
+	// Create Directory (based on seed value)
+	dname := fmt.Sprintf("%d", rseed)
+	dname = filepath.Join(rootpath, dname)
+	if err := os.MkdirAll(dname, 0666); err != nil {
+		panic(err)
+	}
+	// Define file path
+	fpath := filepath.Join(dname, fmt.Sprintf("Gen%d.png", gen))
+	// Save plot to png
+	if err:= p.Save(20*vg.Centimeter, 20*vg.Centimeter, fpath); err != nil {
+		panic(err)
+	}
+}
+
+func TourToPoints(t *base.Tour) plotter.XYs {
+	tLen := t.TourSize()
+	pts := make(plotter.XYs, tLen+1)
+	c0 := t.GetCity(0)
+	pts[0].X = float64(c0.X())
+	pts[0].Y = float64(c0.Y())
+	pts[tLen].X = float64(c0.X())
+	pts[tLen].Y = float64(c0.Y())
+	for i := 1; i < tLen; i++ {
+		c := t.GetCity(i)
+		pts[i].X = float64(c.X())
+		pts[i].Y = float64(c.Y())
+	}
+	return pts
 }

@@ -11,6 +11,8 @@ import (
 	"gonum.org/v1/plot/plotutil"
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/vg"
+	"os"
+	"path/filepath"
 )
 
 func devTest() {
@@ -26,20 +28,42 @@ func plotTest() {
 	if err != nil  {
 		panic(err)
 	}
-	p.Title.Text = "Test Plot"
+	p.Title.Text = "Test Plot ABC"
 	p.X.Label.Text = "X"
 	p.Y.Label.Text = "Y"
 	p.Add(plotter.NewGrid())
 
-	pts := CitiesToPoints(&cities)
 
+	pts := CitiesToPoints2(&cities)
+	// Plot, Add lines and points
 	err = plotutil.AddLinePoints(p, pts)
 	if err != nil {
 		panic(err)
 	}
+	// Plot Add labels
+	labels, err := plotter.NewLabels(pts)
+	if err != nil {
+		panic(err)
+	}
+	p.Add(labels)
 
+
+
+	// Directory names
+	rootpath := "devTest"
+	dname := "123/"
+	// File path to store images
+	dname = filepath.Join(rootpath, dname)
+	// Create Directory
+	if err := os.MkdirAll(dname, 0666); err != nil {
+		panic(err)
+	}
+	// File name
+	imgname := "Map.png"
+	// File path
+	fpath := filepath.Join(dname, imgname)
 	// Save plot to png
-	if err := p.Save(20*vg.Centimeter, 20*vg.Centimeter, "Map.png"); err != nil {
+	if err := p.Save(20*vg.Centimeter, 20*vg.Centimeter, fpath); err != nil {
 		panic(err)
 	}
 }
@@ -56,6 +80,25 @@ func CitiesToPoints(cities *[]base.City) plotter.XYs {
 	pts[l].X = float64(c[0].X())
 	pts[l].Y = float64(c[0].Y())
 	return pts
+}
+
+func CitiesToPoints2(cities *[]base.City) plotter.XYLabels {
+	c := *cities
+	l := len(c)
+	fmt.Println(l)
+	pts := make(plotter.XYs, l+1)
+	labels := make([]string, l+1)
+	for i, v := range c {
+		pts[i].X = float64(v.X())
+		pts[i].Y = float64(v.Y())
+		labels[i] = fmt.Sprintf("%d, %d",v.X(), v.Y())
+	}
+	pts[l].X = float64(c[0].X())
+	pts[l].Y = float64(c[0].Y())
+	labels[l] = fmt.Sprintf("%d, %d",c[0].X(), c[0].Y())
+
+	xylabels := plotter.XYLabels{pts,labels}
+	return xylabels
 }
 
 func tspRandom() {
