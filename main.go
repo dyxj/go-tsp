@@ -17,7 +17,6 @@ import (
 
 var (
 	// For development purpose
-	devTestBool    = false
 	enablelogging  = false
 
 	// To store results
@@ -33,13 +32,7 @@ var (
 )
 
 func main() {
-	// For development and testing function.
-	if devTestBool {
-		devTest()
-		os.Exit(0)
-	}
 	fmt.Println("Traveling sales person")
-
 	// Enable/disable logger
 	if enablelogging {
 		//f, err := os.OpenFile("tsplog", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)

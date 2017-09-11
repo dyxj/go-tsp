@@ -3,7 +3,7 @@
   
 ## How to run
 The program can be ran 2 ways
-1. go run *.go  
+1. go run main.go  
 or
 2. go build : an executable file is generated  
 **ie:** go-tsp.exe. Run the file.   
