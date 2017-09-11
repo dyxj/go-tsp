@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	devTestBool    = true
+	devTestBool    = false
 	enablelogging  = true
 	randomCityBool = false
 	rootpath       = "tsp"
@@ -24,6 +24,8 @@ var (
 	seed = int64(1504372704)
 	// Seed default random
 	//seed = time.Now().Unix()
+	// Number of generation to loop through
+	noGen = 200
 )
 
 func main() {
@@ -68,7 +70,7 @@ func main() {
 	//tspRandom()
 	log.Println("Initialization completed")
 	log.Println("Begin genetic algorithm")
-	tspGA(&tm, 100)
+	tspGA(&tm, noGen)
 }
 
 // tspGA : Travelling sales person with genetic algorithm
@@ -171,13 +173,19 @@ func visualization(t *base.Tour, gen int, rseed int64) {
 	p.Y.Label.Text = "Y"
 	p.Add(plotter.NewGrid())
 
-	// Construct points
-	pts := TourToPoints(t)
+	// Construct points with labels
+	pts_labels := TourToPoints(t)
 	// Plot points
-	err = plotutil.AddLinePoints(p, pts)
+	err = plotutil.AddLinePoints(p, pts_labels)
 	if err != nil  {
 		panic(err)
 	}
+	// Create Labels plotter
+	plabels, err := plotter.NewLabels(pts_labels)
+	if err != nil {
+		panic(err)
+	}
+	p.Add(plabels)
 
 	// Create Directory (based on seed value)
 	dname := fmt.Sprintf("%d", rseed)
@@ -188,23 +196,28 @@ func visualization(t *base.Tour, gen int, rseed int64) {
 	// Define file path
 	fpath := filepath.Join(dname, fmt.Sprintf("Gen%d.png", gen))
 	// Save plot to png
-	if err:= p.Save(20*vg.Centimeter, 20*vg.Centimeter, fpath); err != nil {
+	if err:= p.Save(30*vg.Centimeter, 30*vg.Centimeter, fpath); err != nil {
 		panic(err)
 	}
 }
 
-func TourToPoints(t *base.Tour) plotter.XYs {
+func TourToPoints(t *base.Tour) plotter.XYLabels {
 	tLen := t.TourSize()
 	pts := make(plotter.XYs, tLen+1)
+	labels := make([]string, tLen+1)
+
 	c0 := t.GetCity(0)
 	pts[0].X = float64(c0.X())
 	pts[0].Y = float64(c0.Y())
 	pts[tLen].X = float64(c0.X())
 	pts[tLen].Y = float64(c0.Y())
+	labels[0] = fmt.Sprintf("%d, %d, %d", 0, c0.X(), c0.Y())
 	for i := 1; i < tLen; i++ {
 		c := t.GetCity(i)
 		pts[i].X = float64(c.X())
 		pts[i].Y = float64(c.Y())
+		labels[i] = fmt.Sprintf("%d, %d, %d", i, c.X(), c.Y())
 	}
-	return pts
+	xylabels := plotter.XYLabels{pts,labels}
+	return xylabels
 }

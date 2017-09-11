@@ -8,11 +8,12 @@ import (
 	"reflect"
 	"time"
 	"gonum.org/v1/plot"
-	"gonum.org/v1/plot/plotutil"
+
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/vg"
 	"os"
 	"path/filepath"
+	"gonum.org/v1/plot/plotutil"
 )
 
 func devTest() {
@@ -33,21 +34,25 @@ func plotTest() {
 	p.Y.Label.Text = "Y"
 	p.Add(plotter.NewGrid())
 
-
 	pts := CitiesToPoints2(&cities)
 	// Plot, Add lines and points
 	err = plotutil.AddLinePoints(p, pts)
 	if err != nil {
 		panic(err)
 	}
-	// Plot Add labels
+	// Create labels plotter
 	labels, err := plotter.NewLabels(pts)
 	if err != nil {
 		panic(err)
 	}
+	lp, sp, err := plotter.NewLinePoints(pts)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(lp)
+	fmt.Println(sp)
+	//p.Add(lp, sp, labels)
 	p.Add(labels)
-
-
 
 	// Directory names
 	rootpath := "devTest"
@@ -63,7 +68,7 @@ func plotTest() {
 	// File path
 	fpath := filepath.Join(dname, imgname)
 	// Save plot to png
-	if err := p.Save(20*vg.Centimeter, 20*vg.Centimeter, fpath); err != nil {
+	if err := p.Save(30*vg.Centimeter, 30*vg.Centimeter, fpath); err != nil {
 		panic(err)
 	}
 }
@@ -91,11 +96,11 @@ func CitiesToPoints2(cities *[]base.City) plotter.XYLabels {
 	for i, v := range c {
 		pts[i].X = float64(v.X())
 		pts[i].Y = float64(v.Y())
-		labels[i] = fmt.Sprintf("%d, %d",v.X(), v.Y())
+		labels[i] = fmt.Sprintf("%d, %d, %d", i, v.X(), v.Y())
 	}
 	pts[l].X = float64(c[0].X())
 	pts[l].Y = float64(c[0].Y())
-	labels[l] = fmt.Sprintf("%d, %d",c[0].X(), c[0].Y())
+	labels[l] = fmt.Sprintf("%d, %d, %d", 0, c[0].X(), c[0].Y())
 
 	xylabels := plotter.XYLabels{pts,labels}
 	return xylabels
