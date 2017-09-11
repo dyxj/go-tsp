@@ -26,18 +26,20 @@ var (
 	//seed = time.Now().Unix()
 
 	// Number of generation to loop through
-	noGen = 200
+	noGen = 100
 	// Population Size
-	popSize = 50
+	popSize = 200
 )
 
 func main() {
+	// For development and testing function.
 	if devTestBool {
 		devTest()
 		os.Exit(0)
 	}
 	fmt.Println("Traveling sales person")
-	// Disable logger
+
+	// Enable/disable logger
 	if enablelogging {
 		//f, err := os.OpenFile("tsplog", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
 		f, err := os.OpenFile("tsplog.log", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
@@ -50,8 +52,9 @@ func main() {
 		log.SetOutput(ioutil.Discard)
 	}
 
-	fmt.Println("seed: ", seed)
+	// Set seed value for default source
 	rand.Seed(seed)
+	fmt.Println("seed: ", seed)
 
 	// Init TourManager
 	tm := base.TourManager{}
@@ -100,6 +103,11 @@ func tspGA(tm *base.TourManager, gen int) {
 	fTourDistance := fFit.TourDistance()
 
 	fmt.Println("Print and save image of fittest by generation-----------")
+	// Remove old data
+	dname := fmt.Sprintf("%d", seed)
+	dname = filepath.Join(rootpath, dname)
+	os.RemoveAll(dname)
+
 	// Store current best distance
 	lastBestTourDistance := iTourDistance
 	// Plot Generation 0

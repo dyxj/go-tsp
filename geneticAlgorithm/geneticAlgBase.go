@@ -9,9 +9,9 @@ import (
 // Genetic Algorithm Parameters
 var (
 	mutationRate        float64 = 0.015
-	tournamentSize      int     = 5
+	tournamentSize      int     = 10
 	elitism             bool    = true
-	randomCrossoverRate         = true
+	randomCrossoverRate         = false
 	defCrossoverRate    float32 = 0.7
 )
 
