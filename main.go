@@ -16,16 +16,19 @@ import (
 )
 
 var (
+	// For development purpose
 	devTestBool    = false
-	enablelogging  = true
-	randomCityBool = false
+	enablelogging  = false
+	// To store results
 	rootpath       = "tsp"
-	// Fix seed
+	// Define seed for default rand
 	seed = int64(1504372704)
-	// Seed default random
 	//seed = time.Now().Unix()
+
 	// Number of generation to loop through
 	noGen = 200
+	// Population Size
+	popSize = 50
 )
 
 func main() {
@@ -56,11 +59,7 @@ func main() {
 
 	// Generate Cities
 	var cities []base.City
-	if randomCityBool {
-		cities = *initRandomCities(20)
-	} else {
-		cities = *initializeSampleCities()
-	}
+	cities = *initRandomCities(20)
 
 	// Add cities to TourManager
 	for _, v := range cities {
@@ -77,7 +76,7 @@ func main() {
 // input :- TourManager, Number of generations
 func tspGA(tm *base.TourManager, gen int) {
 	p := base.Population{}
-	p.InitPopulation(50, *tm)
+	p.InitPopulation(popSize, *tm)
 
 	// Get initial fittest tour and it's tour distance
 	fmt.Println("Start....")
@@ -120,35 +119,6 @@ func tspGA(tm *base.TourManager, gen int) {
 	log.Println("Evolution completed")
 	log.Println("Initial tour distance: ", iTourDistance)
 	log.Println("Final tour distance: ", fTourDistance)
-}
-
-func initializeSampleCities() *[]base.City {
-	cities := make([]base.City, 0, 20)
-	// Sample
-	cities = append(cities, base.GenerateCity(60, 200)) // c1
-	cities = append(cities, base.GenerateCity(180, 200))
-	cities = append(cities, base.GenerateCity(80, 180))
-	cities = append(cities, base.GenerateCity(140, 180))
-	cities = append(cities, base.GenerateCity(20, 160)) // c5
-	cities = append(cities, base.GenerateCity(100, 160))
-	cities = append(cities, base.GenerateCity(200, 160))
-	cities = append(cities, base.GenerateCity(140, 140))
-	cities = append(cities, base.GenerateCity(40, 120))
-	cities = append(cities, base.GenerateCity(100, 120)) // c10
-	cities = append(cities, base.GenerateCity(180, 100))
-	cities = append(cities, base.GenerateCity(60, 80))
-	cities = append(cities, base.GenerateCity(120, 80))
-	cities = append(cities, base.GenerateCity(180, 60))
-	cities = append(cities, base.GenerateCity(20, 40)) // c15
-	cities = append(cities, base.GenerateCity(100, 40))
-	cities = append(cities, base.GenerateCity(200, 40))
-	cities = append(cities, base.GenerateCity(20, 20))
-	cities = append(cities, base.GenerateCity(60, 20))
-	cities = append(cities, base.GenerateCity(160, 20)) // c20
-
-	// Sample using random seed
-	// Completed testing
-	return &cities
 }
 
 func initRandomCities(cityCount int) *[]base.City {
