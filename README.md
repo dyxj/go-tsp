@@ -12,7 +12,7 @@ or
 The program will create a folder called **tsp**(*can be defined in program),
  which stores the results based on the seed number provided. The results are 
  images(.png) of the tours that outperform their predecessors.  
-**ie:** ./ tsp / [seed number] / [images....png]  
+**ie:** ./tsp/[seed number]/[images....png]  
     
 **Sample Results:**  
 ![Alt text](/ReadmeAssets/1504372704/output.gif)
