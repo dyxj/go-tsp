@@ -19,6 +19,7 @@ var (
 	// For development purpose
 	devTestBool    = false
 	enablelogging  = false
+
 	// To store results
 	rootpath       = "tsp"
 	// Define seed for default rand
@@ -172,7 +173,7 @@ func visualization(t *base.Tour, gen int, rseed int64) {
 		panic(err)
 	}
 	// Define file path
-	fpath := filepath.Join(dname, fmt.Sprintf("Gen%d.png", gen))
+	fpath := filepath.Join(dname, fmt.Sprintf("%d.png", gen))
 	// Save plot to png
 	if err:= p.Save(30*vg.Centimeter, 30*vg.Centimeter, fpath); err != nil {
 		panic(err)
