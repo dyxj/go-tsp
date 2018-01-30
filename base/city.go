@@ -13,7 +13,7 @@ type City struct {
 }
 
 // GenerateRandomCity : Generate city with random coordinates
-func GenerateRandomCity() City{
+func GenerateRandomCity() City {
 	c := City{}
 	c.x = rand.Intn(100) * 100
 	c.y = rand.Intn(100) * 100
@@ -21,7 +21,7 @@ func GenerateRandomCity() City{
 }
 
 // GenerateCity : Generate city with user defined coordinates
-func GenerateCity(x int, y int) City{
+func GenerateCity(x int, y int) City {
 	c := City{}
 	c.x = x
 	c.y = y

@@ -4,23 +4,23 @@ import (
 	"fmt"
 	"go-tsp/base"
 	ga "go-tsp/geneticAlgorithm"
+	"gonum.org/v1/plot"
+	"gonum.org/v1/plot/plotter"
+	"gonum.org/v1/plot/plotutil"
+	"gonum.org/v1/plot/vg"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"os"
 	"path/filepath"
-	"gonum.org/v1/plot"
-	"gonum.org/v1/plot/plotter"
-	"gonum.org/v1/plot/plotutil"
-	"gonum.org/v1/plot/vg"
 )
 
 var (
 	// For development purpose
-	enablelogging  = false
+	enablelogging = false
 
 	// To store results
-	rootpath       = "tsp"
+	rootpath = "tsp"
 	// Define seed for default rand
 	seed = int64(1504372704)
 	//seed = time.Now().Unix()
@@ -140,7 +140,7 @@ func visualization(t *base.Tour, gen int, rseed int64) {
 		panic(err)
 	}
 	// Set plot styles
-	p.Title.Text = fmt.Sprintf("Seed: %d, Generation %d, Tour Distance: %f",rseed, gen, t.TourDistance())
+	p.Title.Text = fmt.Sprintf("Seed: %d, Generation %d, Tour Distance: %f", rseed, gen, t.TourDistance())
 	p.X.Label.Text = "X"
 	p.Y.Label.Text = "Y"
 	p.Add(plotter.NewGrid())
@@ -149,7 +149,7 @@ func visualization(t *base.Tour, gen int, rseed int64) {
 	pts_labels := TourToPoints(t)
 	// Plot points
 	err = plotutil.AddLinePoints(p, pts_labels)
-	if err != nil  {
+	if err != nil {
 		panic(err)
 	}
 	// Create Labels plotter
@@ -168,7 +168,7 @@ func visualization(t *base.Tour, gen int, rseed int64) {
 	// Define file path
 	fpath := filepath.Join(dname, fmt.Sprintf("%d.png", gen))
 	// Save plot to png
-	if err:= p.Save(30*vg.Centimeter, 30*vg.Centimeter, fpath); err != nil {
+	if err := p.Save(30*vg.Centimeter, 30*vg.Centimeter, fpath); err != nil {
 		panic(err)
 	}
 }
@@ -190,6 +190,6 @@ func TourToPoints(t *base.Tour) plotter.XYLabels {
 		pts[i].Y = float64(c.Y())
 		labels[i] = fmt.Sprintf("%d, %d, %d", i, c.X(), c.Y())
 	}
-	xylabels := plotter.XYLabels{pts,labels}
+	xylabels := plotter.XYLabels{pts, labels}
 	return xylabels
 }

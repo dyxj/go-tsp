@@ -1,8 +1,8 @@
 package geneticAlgorithm
 
 import (
-	"log"
 	"go-tsp/base"
+	"log"
 	"math/rand"
 )
 
@@ -122,7 +122,7 @@ func TournamentSelection(pop base.Population) base.Tour {
 	- Mutate child based on probability
 	- return new population
 */
-func EvolvePopulation(pop base.Population) base.Population{
+func EvolvePopulation(pop base.Population) base.Population {
 	npop := base.Population{}
 	npop.InitEmpty(pop.PopulationSize())
 
@@ -134,10 +134,10 @@ func EvolvePopulation(pop base.Population) base.Population{
 
 	for i := popOffset; i < npop.PopulationSize(); i++ {
 		p1 := TournamentSelection(pop)
-		p2 := TournamentSelection(pop)		
-		child := Crossover(p1,p2)
+		p2 := TournamentSelection(pop)
+		child := Crossover(p1, p2)
 		Mutation(&child)
-		npop.SaveTour(i,child)
+		npop.SaveTour(i, child)
 	}
 	return npop
 }

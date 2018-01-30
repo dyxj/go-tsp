@@ -85,7 +85,7 @@ func (a *Tour) ContainCity(c City) bool {
 
 func (a Tour) String() string {
 	s := "|"
-	for i , c := range a.tourCities {
+	for i, c := range a.tourCities {
 		s += strconv.Itoa(i) + c.String() + "|"
 	}
 	return s

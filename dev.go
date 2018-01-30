@@ -7,15 +7,15 @@ import (
 	"fmt"
 	"go-tsp/base"
 	ga "go-tsp/geneticAlgorithm"
-	"math/rand"
-	"reflect"
-	"time"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
+	"gonum.org/v1/plot/plotutil"
 	"gonum.org/v1/plot/vg"
+	"math/rand"
 	"os"
 	"path/filepath"
-	"gonum.org/v1/plot/plotutil"
+	"reflect"
+	"time"
 )
 
 func devTest() {
@@ -28,7 +28,7 @@ func plotTest() {
 	//cities := *initializeSampleCities()
 	cities := *initRandomCities(20)
 	p, err := plot.New()
-	if err != nil  {
+	if err != nil {
 		panic(err)
 	}
 	p.Title.Text = "Test Plot ABC"
@@ -104,7 +104,7 @@ func CitiesToPoints2(cities *[]base.City) plotter.XYLabels {
 	pts[l].Y = float64(c[0].Y())
 	labels[l] = fmt.Sprintf("%d, %d, %d", 0, c[0].X(), c[0].Y())
 
-	xylabels := plotter.XYLabels{pts,labels}
+	xylabels := plotter.XYLabels{pts, labels}
 	return xylabels
 }
 
