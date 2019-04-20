@@ -4,15 +4,16 @@ import (
 	"fmt"
 	"go-tsp/base"
 	ga "go-tsp/geneticAlgorithm"
-	"gonum.org/v1/plot"
-	"gonum.org/v1/plot/plotter"
-	"gonum.org/v1/plot/plotutil"
-	"gonum.org/v1/plot/vg"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"os"
 	"path/filepath"
+
+	"gonum.org/v1/plot"
+	"gonum.org/v1/plot/plotter"
+	"gonum.org/v1/plot/plotutil"
+	"gonum.org/v1/plot/vg"
 )
 
 var (
@@ -162,7 +163,7 @@ func visualization(t *base.Tour, gen int, rseed int64) {
 	// Create Directory (based on seed value)
 	dname := fmt.Sprintf("%d", rseed)
 	dname = filepath.Join(rootpath, dname)
-	if err := os.MkdirAll(dname, 0666); err != nil {
+	if err := os.MkdirAll(dname, 0755); err != nil {
 		panic(err)
 	}
 	// Define file path

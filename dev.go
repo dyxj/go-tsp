@@ -7,15 +7,16 @@ import (
 	"fmt"
 	"go-tsp/base"
 	ga "go-tsp/geneticAlgorithm"
-	"gonum.org/v1/plot"
-	"gonum.org/v1/plot/plotter"
-	"gonum.org/v1/plot/plotutil"
-	"gonum.org/v1/plot/vg"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"reflect"
 	"time"
+
+	"gonum.org/v1/plot"
+	"gonum.org/v1/plot/plotter"
+	"gonum.org/v1/plot/plotutil"
+	"gonum.org/v1/plot/vg"
 )
 
 func devTest() {
