@@ -1,17 +1,18 @@
 /*
-	THIS FILE IS ONLY FOR DEVELOPMENT AND TESTING FUNCTIONS
+THIS FILE IS ONLY FOR DEVELOPMENT AND TESTING FUNCTIONS
 */
 package main
 
 import (
 	"fmt"
-	"go-tsp/base"
-	ga "go-tsp/geneticAlgorithm"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"reflect"
 	"time"
+
+	"github.com/dyxj/go-tsp/base"
+	ga "github.com/dyxj/go-tsp/geneticAlgorithm"
 
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"

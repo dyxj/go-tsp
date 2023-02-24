@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-tsp/base"
-	ga "go-tsp/geneticAlgorithm"
+	"github.com/dyxj/go-tsp/base"
+	ga "github.com/dyxj/go-tsp/geneticAlgorithm"
 	"io/ioutil"
 	"log"
 	"math/rand"
