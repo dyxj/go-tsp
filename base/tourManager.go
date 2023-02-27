@@ -7,7 +7,7 @@ type TourManager struct {
 
 // NewTourManager : Initialize TourManager
 func (a *TourManager) NewTourManager() {
-	a.destCities = make([]City, 0, 50)
+	a.destCities = []City{}
 }
 
 func (a *TourManager) AddCity(c City) {
