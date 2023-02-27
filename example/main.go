@@ -123,6 +123,7 @@ func tspGA(tm *base.TourManager, gen int) {
 	log.Println("Evolution completed")
 	log.Println("Initial tour distance: ", iTourDistance)
 	log.Println("Final tour distance: ", fTourDistance)
+
 }
 
 // Save tour as graph
@@ -176,12 +177,12 @@ func TourToPoints(t *base.Tour) plotter.XYLabels {
 	pts[0].Y = float64(c0.Y())
 	pts[tLen].X = float64(c0.X())
 	pts[tLen].Y = float64(c0.Y())
-	labels[0] = fmt.Sprintf("%d, %d, %d", 0, c0.X(), c0.Y())
+	labels[0] = fmt.Sprintf("%d, %d, %d", 0, int(c0.X()), int(c0.Y()))
 	for i := 1; i < tLen; i++ {
 		c := t.GetCity(i)
 		pts[i].X = float64(c.X())
 		pts[i].Y = float64(c.Y())
-		labels[i] = fmt.Sprintf("%d, %d, %d", i, c.X(), c.Y())
+		labels[i] = fmt.Sprintf("%d, %d, %d", i, int(c.X()), int(c.Y()))
 	}
 	xylabels := plotter.XYLabels{XYs: pts, Labels: labels}
 	return xylabels

@@ -8,20 +8,20 @@ import (
 
 // City : coordinates of city
 type City struct {
-	x int
-	y int
+	x float64
+	y float64
 }
 
 // GenerateRandomCity : Generate city with random coordinates
 func GenerateRandomCity() City {
 	c := City{}
-	c.x = rand.Intn(100) * 100
-	c.y = rand.Intn(100) * 100
+	c.x = rand.Float64()*(100) * 100
+	c.y = rand.Float64()*(100) * 100
 	return c
 }
 
 // GenerateCity : Generate city with user defined coordinates
-func GenerateCity(x int, y int) City {
+func GenerateCity(x float64, y float64) City {
 	c := City{}
 	c.x = x
 	c.y = y
@@ -29,7 +29,7 @@ func GenerateCity(x int, y int) City {
 }
 
 // SetLocation : User defined coordinates for a city
-func (a *City) SetLocation(x int, y int) {
+func (a *City) SetLocation(x float64, y float64) {
 	a.x = x
 	a.y = y
 }
@@ -53,16 +53,16 @@ func (a *City) DistanceTo(c City) float64 {
 	return fd
 }
 
-func (a *City) X() int {
+func (a *City) X() float64 {
 	return a.x
 }
 
-func (a *City) Y() int {
+func (a *City) Y() float64 {
 	return a.y
 }
 
 func (a City) String() string {
-	return fmt.Sprintf("{x%d y%d}", a.x, a.y)
+	return fmt.Sprintf("{x%v y%v}", a.x, a.y)
 }
 
 // ShuffleCities : return a shuffled []City given input []City
