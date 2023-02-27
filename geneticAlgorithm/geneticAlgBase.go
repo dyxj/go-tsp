@@ -1,9 +1,10 @@
 package geneticAlgorithm
 
 import (
-	"go-tsp/base"
 	"log"
 	"math/rand"
+
+	"github.com/the-clothing-loop/go-tsp/base"
 )
 
 // Genetic Algorithm Parameters
