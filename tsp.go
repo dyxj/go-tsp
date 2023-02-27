@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/dyxj/go-tsp/base"
-	ga "github.com/dyxj/go-tsp/geneticAlgorithm"
+	"github.com/the-clothing-loop/go-tsp/base"
+	ga "github.com/the-clothing-loop/go-tsp/geneticAlgorithm"
 )
 
 // tspGA : Travelling sales person with genetic algorithm

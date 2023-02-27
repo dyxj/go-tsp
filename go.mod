@@ -1,4 +1,4 @@
-module github.com/dyxj/go-tsp
+module github.com/the-clothing-loop/go-tsp
 
 go 1.20
 

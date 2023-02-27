@@ -4,7 +4,7 @@ import (
 	"log"
 	"math/rand"
 
-	"github.com/dyxj/go-tsp/base"
+	"github.com/the-clothing-loop/go-tsp/base"
 )
 
 // Genetic Algorithm Parameters

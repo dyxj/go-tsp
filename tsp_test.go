@@ -3,7 +3,7 @@ package tsp
 import (
 	"testing"
 
-	"github.com/dyxj/go-tsp/base"
+	"github.com/the-clothing-loop/go-tsp/base"
 )
 
 func TestTsp(t *testing.T) {

@@ -3,7 +3,7 @@ module example.com
 go 1.20
 
 require (
-	github.com/dyxj/go-tsp v0.0.0
+	github.com/the-clothing-loop/go-tsp v0.0.0
 	gonum.org/v1/plot v0.0.0-20190410204940-3a5f52653745
 )
 
@@ -17,4 +17,4 @@ require (
 	gonum.org/v1/gonum v0.0.0-20190419091250-b869779d1d53 // indirect
 )
 
-replace github.com/dyxj/go-tsp v0.0.0 => ../
+replace github.com/the-clothing-loop/go-tsp v0.0.0 => ../

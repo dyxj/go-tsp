@@ -8,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/dyxj/go-tsp/base"
-	ga "github.com/dyxj/go-tsp/geneticAlgorithm"
+	"github.com/the-clothing-loop/go-tsp/base"
+	ga "github.com/the-clothing-loop/go-tsp/geneticAlgorithm"
 
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"

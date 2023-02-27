@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dyxj/go-tsp/base"
 	"github.com/stretchr/testify/assert"
+	"github.com/the-clothing-loop/go-tsp/base"
 )
 
 func TestTourDistance(t *testing.T) {
