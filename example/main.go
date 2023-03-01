@@ -68,12 +68,14 @@ func main() {
 	//tspRandom()
 	log.Println("Initialization completed")
 	log.Println("Begin genetic algorithm")
-	tspGA(&tm, noGen)
+	testTour := tspGA(&tm, noGen);
+
+	fmt.Print(testTour)
 }
 
 // tspGA : Travelling sales person with genetic algorithm
 // input :- TourManager, Number of generations
-func tspGA(tm *base.TourManager, gen int) {
+func tspGA(tm *base.TourManager, gen int)(*base.Tour) {
 	p := base.Population{}
 	p.InitPopulation(popSize, *tm)
 
@@ -123,6 +125,8 @@ func tspGA(tm *base.TourManager, gen int) {
 	log.Println("Evolution completed")
 	log.Println("Initial tour distance: ", iTourDistance)
 	log.Println("Final tour distance: ", fTourDistance)
+
+	return fFit;
 
 }
 
