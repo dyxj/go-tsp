@@ -75,26 +75,26 @@ func cityListContain() {
 func initializeSampleCities() *[]base.City {
 	cities := make([]base.City, 0, 20)
 	// Sample
-	cities = append(cities, base.GenerateCity(60, 200)) // c1
-	cities = append(cities, base.GenerateCity(180, 200))
-	cities = append(cities, base.GenerateCity(80, 180))
-	cities = append(cities, base.GenerateCity(140, 180))
-	cities = append(cities, base.GenerateCity(20, 160)) // c5
-	cities = append(cities, base.GenerateCity(100, 160))
-	cities = append(cities, base.GenerateCity(200, 160))
-	cities = append(cities, base.GenerateCity(140, 140))
-	cities = append(cities, base.GenerateCity(40, 120))
-	cities = append(cities, base.GenerateCity(100, 120)) // c10
-	cities = append(cities, base.GenerateCity(180, 100))
-	cities = append(cities, base.GenerateCity(60, 80))
-	cities = append(cities, base.GenerateCity(120, 80))
-	cities = append(cities, base.GenerateCity(180, 60))
-	cities = append(cities, base.GenerateCity(20, 40)) // c15
-	cities = append(cities, base.GenerateCity(100, 40))
-	cities = append(cities, base.GenerateCity(200, 40))
-	cities = append(cities, base.GenerateCity(20, 20))
-	cities = append(cities, base.GenerateCity(60, 20))
-	cities = append(cities, base.GenerateCity(160, 20)) // c20
+	cities = append(cities, base.GenerateCity(60, 200, 1)) // c1
+	cities = append(cities, base.GenerateCity(180, 200, 2))
+	cities = append(cities, base.GenerateCity(80, 180, 3))
+	cities = append(cities, base.GenerateCity(140, 180, 4))
+	cities = append(cities, base.GenerateCity(20, 160, 5)) // c5
+	cities = append(cities, base.GenerateCity(100, 160, 6))
+	cities = append(cities, base.GenerateCity(200, 160, 7))
+	cities = append(cities, base.GenerateCity(140, 140, 8))
+	cities = append(cities, base.GenerateCity(40, 120, 9))
+	cities = append(cities, base.GenerateCity(100, 120, 10)) // c10
+	cities = append(cities, base.GenerateCity(180, 100, 11))
+	cities = append(cities, base.GenerateCity(60, 80, 12))
+	cities = append(cities, base.GenerateCity(120, 80, 13))
+	cities = append(cities, base.GenerateCity(180, 60, 14))
+	cities = append(cities, base.GenerateCity(20, 40, 15)) // c15
+	cities = append(cities, base.GenerateCity(100, 40, 16))
+	cities = append(cities, base.GenerateCity(200, 40, 17))
+	cities = append(cities, base.GenerateCity(20, 20, 18))
+	cities = append(cities, base.GenerateCity(60, 20, 19))
+	cities = append(cities, base.GenerateCity(160, 20, 20)) // c20
 
 	// Sample using random seed
 	// Completed testing
