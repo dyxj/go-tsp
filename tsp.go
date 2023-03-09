@@ -10,9 +10,49 @@ import (
 
 // tspGA : Travelling sales person with genetic algorithm
 // input :- TourManager, Number of generations
-func TspGA(tm *base.TourManager, gen int)(*base.Tour){
+
+
+func TspGA(tm *base.TourManager, gen int)(*base.Tour) {
 	p := base.Population{}
-	p.InitPopulation(1, *tm)
+	p.InitPopulation(200, *tm)
+
+	// Get initial fittest tour and it's tour distance
+	fmt.Println("Start....")
+	iFit := p.GetFittest()
+	iTourDistance := iFit.TourDistance()
+	//fmt.Println("Initial tour distance: ", iTourDistance)
+
+	// Map to store fittest tours
+	fittestTours := make([]base.Tour, 0, gen+1)
+	fittestTours = append(fittestTours, *iFit)
+	// Evolve population "gen" number of times
+	for i := 1; i < gen+1; i++ {
+		log.Println("Generation ", i)
+		p = ga.EvolvePopulation(p)
+		// Store fittest for each generation
+		fittestTours = append(fittestTours, *p.GetFittest())
+	}
+	// Get final fittest tour and tour distance
+	fmt.Println("Evolution completed")
+	fFit := p.GetFittest()
+	fTourDistance := fFit.TourDistance()
+
+
+	fmt.Println("Initial tour distance: ", iTourDistance)
+	fmt.Println("Final tour distance: ", fTourDistance)
+
+	log.Println("Evolution completed")
+	log.Println("Initial tour distance: ", iTourDistance)
+	log.Println("Final tour distance: ", fTourDistance)
+
+	return fFit;
+
+}
+
+
+func nTspGA(tm *base.TourManager, gen int)(*base.Tour){
+	p := base.Population{}
+	p.InitPopulation(200, *tm)
 
 	// Get initial fittest tour and it's tour distance
 	fmt.Println("Start....")

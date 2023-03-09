@@ -10,6 +10,7 @@ import (
 type City struct {
 	x float64
 	y float64
+	id uint
 }
 
 // GenerateRandomCity : Generate city with random coordinates
@@ -21,10 +22,11 @@ func GenerateRandomCity() City {
 }
 
 // GenerateCity : Generate city with user defined coordinates
-func GenerateCity(x float64, y float64) City {
+func GenerateCity(x float64, y float64, id uint) City {
 	c := City{}
 	c.x = x
 	c.y = y
+	c.id = id
 	return c
 }
 
