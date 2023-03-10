@@ -63,6 +63,10 @@ func (a *City) Y() float64 {
 	return a.y
 }
 
+func (a *City) ID() uint{
+	return a.id
+}
+
 func (a City) String() string {
 	return fmt.Sprintf("{x%v y%v}", a.x, a.y)
 }
