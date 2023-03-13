@@ -1,4 +1,4 @@
-package runFucntions
+package runFunctions
 
 import (
 	"github.com/the-clothing-loop/go-tsp/base"
